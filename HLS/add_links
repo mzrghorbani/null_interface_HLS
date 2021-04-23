@@ -1,0 +1,55 @@
+#!/bin/bash
+
+dirname="workspace"
+
+# echo "Is CMSSW set?" 
+# echo "    If NOT"
+# echo "    'export CMSSW=/.../CMSSW_x_x_x/src'"
+
+echo "Creating new $dirname for LF-HLS run" 
+
+if [ ! -d $dirname ]
+then
+        mkdir -p $dirname
+else
+        rm -rf $dirname
+        mkdir -p $dirname
+fi
+
+echo "$PWD/$dirname"
+
+echo "Creating symbolic links in $dirname"
+
+# If HLS files are in CMSSW, then uncomment below;
+
+# ln -f -s $CMSSW/L1Trigger/TrackerTFP/interface/HLS/LRHLS_types.h   $dirname/LRHLS_types.h
+# ln -f -s $CMSSW/L1Trigger/TrackerTFP/interface/HLS/LRHLS_utility.h $dirname/LRHLS_utility.h
+# ln -f -s $CMSSW/L1Trigger/TrackerTFP/interface/HLS/LRHLS_top.h     $dirname/LRHLS_top.h
+# ln -f -s $CMSSW/L1Trigger/TrackerTFP/src/HLS/LRHLS_top.cc          $dirname/LRHLS_top.cc
+# ln -f -s $CMSSW/L1Trigger/TrackerTFP/interface/HLS/LRHLS.h         $dirname/LRHLS.h
+# ln -f -s $CMSSW/L1Trigger/TrackerTFP/src/HLS/LRHLS.cc              $dirname/LRHLS.cc
+
+ln -f -s ../Source/lf_top.h     $dirname/lf_top.h
+ln -f -s ../Source/lf_top.cc    $dirname/lf_top.cc
+ln -f -s ../Source/lf_mem_fe.h  $dirname/lf_mem_fe.h
+ln -f -s ../Source/lf_mem_fe.cc $dirname/lf_mem_fe.cc
+ln -f -s ../Source/lf_mem_be.h  $dirname/lf_mem_be.h
+ln -f -s ../Source/lf_mem_be.cc $dirname/lf_mem_be.cc
+ln -f -s ../Source/lf_types.h   $dirname/lf_types.h
+
+ln -f -s ../Testbench/input.txt       $dirname/input.txt
+ln -f -s ../Testbench/lf_testbench.cc $dirname/lf_testbench.cc
+ln -f -s ../Testbench/output.txt      $dirname/output.txt
+ln -f -s ../vivado_hls_run.tcl        $dirname/vivado_hls_run.tcl
+ln -f -s ../vivado_hls_directives.tcl $dirname/vivado_hls_directives.tcl
+
+echo "Options:"
+echo "    cd into $dirname"
+echo "    use command:"
+echo "        'vivado_hls -f vivado_hls_run.tcl'"
+echo "    or optionally:"
+echo "        'vivado_hls -p LF-HLS' for GUI"
+echo " "
+echo "More information in README.txt file."
+
+exit
